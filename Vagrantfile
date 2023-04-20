@@ -26,7 +26,7 @@ Vagrant.configure("2") do |config|
       end
     master.vm.provider "virtualbox" do |v|
       v.memory = "3072"
-      v.name = "master"
+      v.name = "udaconnect_fork"
       end
     master.vm.provision "shell", inline: <<-SHELL
       sudo zypper refresh
@@ -34,6 +34,10 @@ Vagrant.configure("2") do |config|
       sudo zypper --non-interactive install etcd
       sudo zypper --non-interactive install apparmor-parser
       curl -sfL https://get.k3s.io | sh -
+	  
+	  curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+	  chmod 700 get_helm.sh
+	  ./get_helm.sh
     SHELL
   end
 
@@ -68,6 +72,7 @@ Vagrant.configure("2") do |config|
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
+  config.vm.synced_folder ".", "/vagrant"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
