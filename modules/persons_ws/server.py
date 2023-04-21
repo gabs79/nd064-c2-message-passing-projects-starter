@@ -5,7 +5,10 @@ import grpc
 import person_pb2
 import person_pb2_grpc
 import logging
+import os
 
+name = os.environ['GENAME']
+logging.warning(f'gename env var:{name}')
 
 class PersonServicer(person_pb2_grpc.PersonServiceServicer):
     def Create(self, request, context):
@@ -25,8 +28,7 @@ class PersonServicer(person_pb2_grpc.PersonServiceServicer):
 server = grpc.server(futures.ThreadPoolExecutor(max_workers=2))
 person_pb2_grpc.add_PersonServiceServicer_to_server(PersonServicer(), server)
 
-
-print("Server starting on port 5005...")
+print(f"Server starting on port 5005, args:{name}")
 server.add_insecure_port("[::]:5005")
 server.start()
 # Keep thread alive

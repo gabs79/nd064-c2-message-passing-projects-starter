@@ -1,0 +1,10 @@
+this will be the apiserver WS
+
+currently added the /version route, which upgraded ge version
+
+test locally: on root for this module, execute
+    flask run (not 0.0.0.0)
+    this runs in 127.0.0.1:5000/version
+
+TODO: remove DB connection, and add it to other WS (personws, etc)
+this should only forward accordingly

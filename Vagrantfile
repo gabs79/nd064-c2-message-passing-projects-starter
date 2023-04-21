@@ -21,6 +21,7 @@ Vagrant.configure("2") do |config|
     master.vm.network "forwarded_port", guest: 22, host: 2222, id: "ssh", disabled: true
     master.vm.network "forwarded_port", guest: 22, host: 2000 # Master Node SSH
     master.vm.network "forwarded_port", guest: 6443, host: 6443 # API Access
+    master.vm.network "forwarded_port", guest: 5000, host: 5000 # API Access
     for p in 30000..30100 # expose NodePort IP's
       master.vm.network "forwarded_port", guest: p, host: p, protocol: "tcp"
       end
@@ -38,6 +39,11 @@ Vagrant.configure("2") do |config|
 	  curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 	  chmod 700 get_helm.sh
 	  ./get_helm.sh
+
+      sudo zypper --non-interactive install docker
+      sudo systemctl enable docker.service
+      sudo systemctl start docker.service
+      sudo /usr/sbin/usermod -aG docker vagrant
     SHELL
   end
 
