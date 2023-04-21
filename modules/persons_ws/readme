@@ -1,0 +1,12 @@
+person webservice (WS)
+
+this uses grpc
+generates grpc client/server stubs
+
+client stubs, are used by the Gateway WS
+server stubs, by this WS which is a container that instantiates the server, listens and push to DB
+
+execute:
+pip install grpcio-tools grpcio
+
+python -m grpc_tools.protoc -I./ --python_out=./ --grpc_python_out=./ person.proto
