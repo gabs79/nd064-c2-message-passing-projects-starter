@@ -1,1 +1,4 @@
-grpcio
+grpcio==1.54.0
+grpcio-tools==1.54.0
+SQLAlchemy==2.0.10
+psycopg2==2.9.6

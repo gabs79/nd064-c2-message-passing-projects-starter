@@ -94,6 +94,7 @@ celerybeat-schedule
 # Environments
 .env
 .venv
+.venv-runtime
 env/
 venv/
 ENV/
@@ -115,7 +116,7 @@ venv.bak/
 .idea
 
 *.pptx
-
+**/*.db
 misc/
 .Rproj.user
 

@@ -10,3 +10,7 @@ execute:
 pip install grpcio-tools grpcio
 
 python -m grpc_tools.protoc -I./ --python_out=./ --grpc_python_out=./ person.proto
+
+added sqlite for mem testing. once in .venv-runtime, added to pip install, but not to the requirements.
+it seems already installed in python > 2.7
+sqlite only for testing
