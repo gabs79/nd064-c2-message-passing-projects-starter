@@ -19,6 +19,7 @@ CREATE TABLE connection (
     id SERIAL PRIMARY KEY,
     FOREIGN KEY (from_person_id) REFERENCES person(id),
     FOREIGN KEY (to_person_id) REFERENCES person(id),
+    exposed_time TIMESTAMP NOT NULL DEFAULT NOW(),
     longitude VARCHAR NOT NULL,
     latitude VARCHAR NOT NULL
 );

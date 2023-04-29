@@ -74,8 +74,11 @@ class Location(Base):
 class Connection(Base):
     __tablename__ = "connection"
     id = mapped_column(BigInteger, primary_key=True)
-    person_id = mapped_column(Integer, ForeignKey(Person.id), nullable=False)
-    location_id = mapped_column(Integer, ForeignKey(Location.id), nullable=False)
+    from_person_id = mapped_column(Integer, ForeignKey(Person.id), nullable=False)
+    to_person_id = mapped_column(Integer, ForeignKey(Person.id), nullable=False)
+    longitude = mapped_column(String(), nullable=False)
+    latitude = mapped_column(String(), nullable=False)
+    exposed_time = Column(DateTime, nullable=False, default=datetime.utcnow)
 
     def __repr__(self):
         _dict = {k:v for (k,v) in self.__dict__.items() if not k.startswith('_')}
@@ -92,8 +95,10 @@ class ConnectionDAO():
     @staticmethod
     def create(connection: Dict) -> Connection:
         new_connection = Connection()
-        new_connection.person_id = connection["person_id"]
-        new_connection.location_id = connection["location_id"]
+        new_connection.from_person_id = connection["from_person_id"]
+        new_connection.to_person_id = connection["to_person_id"]
+        new_connection.longitude = connection["longitude"]
+        new_connection.latitude = connection["latitude"]
         session.add(new_connection)
         session.commit()
         return new_connection
