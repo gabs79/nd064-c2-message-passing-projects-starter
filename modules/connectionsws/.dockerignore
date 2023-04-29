@@ -1,0 +1,6 @@
+readme
+.venv*
+**/__pycache__
+Makefile
+writer.py
+**/*.db
