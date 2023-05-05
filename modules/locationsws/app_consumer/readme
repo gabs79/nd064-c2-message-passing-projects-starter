@@ -1,0 +1,4 @@
+this WS Location Consumer, is meant to be running as a pod as a background deamon process, which
+will be:
+a) consuming kafka locations (produced by location consumer component).
+b) storing into DB
