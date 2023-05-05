@@ -1,0 +1,2 @@
+bson==0.5.10
+kafka-python==2.0.2

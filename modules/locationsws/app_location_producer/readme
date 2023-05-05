@@ -1,0 +1,2 @@
+this component is meant to be used as an import from the Rest API Gateway WS, to 
+produce (send) locations into kafka.
