@@ -28,11 +28,13 @@ if __name__ == "__main__":
     KAFKA_SERVER = 'localhost:9092'
     kafka_mock = TestProducer()
     producer = LocationProducer(topic_name=TOPIC_NAME, kafka_producer=kafka_mock)
-    obj = {
+   
+    loc_a = {
         "person_id":2,
-        "coordinate":"coordinatexy"
+        "latitude":38.97415890712725,
+        "longitude":-77.52724542768364
     }
-    producer.send(obj)
+    producer.send(loc_a)
 
     print(f'Sent to kafka: topic={kafka_mock.topic_name}; flushed={kafka_mock.flush}; obj={kafka_mock.obj}')
     print(f'decoded obj:{loads(kafka_mock.obj)}')

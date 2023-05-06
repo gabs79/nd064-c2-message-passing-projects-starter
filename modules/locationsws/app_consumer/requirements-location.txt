@@ -1,4 +1,0 @@
-SQLAlchemy==2.0.10
-psycopg2==2.9.6
-GeoAlchemy2==0.13.2
-shapely==2.0.1
