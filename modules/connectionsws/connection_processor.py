@@ -1,4 +1,6 @@
-from connectiondao import ConnectionDAO, LocationDAO, Connection, LocationSentinelDAO, Location, LocationSentinel
+from connectiondao import (
+    ConnectionDAO, LocationDAO, Connection, LocationSentinelDAO, Location,
+    LocationSentinel, PersonDAO, Person)
 from typing import Dict, List
 import logging
 
@@ -25,10 +27,10 @@ class ConnectionProcessor():
         new_connections: List[Connection] = []
 
         # Cache all users in memory for quick lookup
-        person_map: Dict[str, Person] = {person.id: person for person in PersonService.retrieve_all()}
+        person_ids = [person.id for person in PersonDAO.retrieve_all()]
 
-        for person_id in person_map.keys():
-            found_connections = _found_connections_for_person(person_id)
+        for person_id in person_ids:
+            found_connections = self._found_connections_for_person(person_id)
             new_connections.extend(found_connections)
 
         return new_connections
