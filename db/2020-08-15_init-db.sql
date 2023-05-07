@@ -23,3 +23,9 @@ CREATE TABLE connection (
     longitude VARCHAR NOT NULL,
     latitude VARCHAR NOT NULL
 );
+
+CREATE TABLE location_sentinel (
+    last_location_id INT NOT NULL
+);
+
+insert into public.location_sentinel (last_location_id) values (0);

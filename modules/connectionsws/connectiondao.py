@@ -30,6 +30,10 @@ class Person(Base):
         _dict = {k:v for (k,v) in self.__dict__.items() if not k.startswith('_')}
         return f'{type(self).__name__}:{_dict}'
 
+class LocationSentinel(Base):
+    __tablename__ = "location_sentinel"
+    last_location_id = mapped_column(Integer, nullable=False, default=0)
+
 class Location(Base):
     __tablename__ = "location"
     __allow_unmapped__ = True
@@ -91,6 +95,16 @@ session = Session()
 def close_session():
     session.close()
 
+class LocationSentinelDAO():
+    @staticmethod
+    def get_value() -> LocationSentinel:
+        return session.query(LocationSentinel).one()
+        
+    @staticmethod
+    def set_value(sentinel: LocationSentinel, new_value:int) -> None:
+        sentinel.last_location_id = new_value
+        session.commit()
+
 class ConnectionDAO():
     @staticmethod
     def create(connection: Dict) -> Connection:
@@ -102,6 +116,12 @@ class ConnectionDAO():
         session.add(new_connection)
         session.commit()
         return new_connection
+    
+    @staticmethod
+    def create_all(connections: List[Connection]) -> None:
+        for connection in connections:
+            session.add(connection)
+        session.commit()
 
 class PersonDAO():
     @staticmethod
@@ -124,6 +144,12 @@ class PersonDAO():
         return new_person
 
 class LocationDAO():
+    @staticmethod
+    def get_after_sentinel(sentinel_value:int) -> List[Location]:
+        return session.query(Location).filter(
+            Location.id > sentinel_value
+        ).all()
+
     @staticmethod
     def retrieve(location_id) -> Location:
         location, coord_text = (
