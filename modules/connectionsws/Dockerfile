@@ -3,10 +3,9 @@ LABEL maintainer="Gabriel Enriquez"
 
 WORKDIR /app
 
-COPY requirements-runtime.txt ./
-RUN pip install --no-cache-dir --requirement requirements-runtime.txt
+COPY requirements.txt ./
+RUN pip install --no-cache-dir --requirement requirements.txt
 
 COPY app/ ./
 
-EXPOSE 5005
-CMD [ "python", "server.py" ]
+CMD [ "python", "connection_processor.py" ]

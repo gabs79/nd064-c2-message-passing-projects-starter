@@ -13,6 +13,8 @@ from shapely.geometry.point import Point
 from config import get_db_string
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.ext.hybrid import hybrid_property
+from datetime import datetime, timedelta
+from sqlalchemy.sql import text
 
 db_string = get_db_string()
 
@@ -122,6 +124,58 @@ class ConnectionDAO():
         for connection in connections:
             session.add(connection)
         session.commit()
+
+    @staticmethod
+    def find_connections_for_person(person_id:int, person_locations: List[Location], meters:int=None, start_date:str=None, end_date:str=None) -> List[Connection]:
+        found_connections:List[Connection] = []
+
+        # Prepare arguments for queries
+        data = []
+        for location in person_locations:
+            data.append(
+                {
+                    "person_id": person_id,
+                    "longitude": location.longitude,
+                    "latitude": location.latitude,
+                    "meters": meters,
+                    "start_date": start_date.strftime("%Y-%m-%d"),
+                    "end_date": (end_date + timedelta(days=1)).strftime("%Y-%m-%d"),
+                }
+            )
+
+        query = text(
+            """
+        SELECT  person_id, id, ST_X(coordinate), ST_Y(coordinate), creation_time
+        FROM    location
+        WHERE   ST_DWithin(coordinate::geography,ST_SetSRID(ST_MakePoint(:latitude,:longitude),4326)::geography, :meters)
+        AND     person_id != :person_id
+        AND     TO_DATE(:start_date, 'YYYY-MM-DD') <= creation_time
+        AND     TO_DATE(:end_date, 'YYYY-MM-DD') > creation_time;
+        """
+        )
+        for line in tuple(data):
+            for (
+                exposed_person_id,
+                location_id,
+                exposed_lat,
+                exposed_long,
+                exposed_time,
+            ) in session.execute(query, **line):
+                location = Location(
+                    id=location_id,
+                    person_id=exposed_person_id,
+                    creation_time=exposed_time,
+                )
+                location.set_wkt_with_coords(exposed_lat, exposed_long)
+
+                found_connection = Connection()
+                found_connection.from_person_id = person_id
+                found_connection.to_person_id = exposed_person_id
+                found_connection.latitude = exposed_lat
+                found_connection.longitude = exposed_long
+                found_connection.exposed_time = exposed_time
+                found_connections.append(found_connection)
+        return found_connections
 
 class PersonDAO():
     @staticmethod
