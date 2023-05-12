@@ -1,4 +1,4 @@
-IMAGE_NAME := gabs79/udacity/gatewayws
+IMAGE_NAME := gabs79/udacity/locationconsumerws
 
 .PHONY: usage
 usage:
@@ -14,4 +14,4 @@ push:
 
 .PHONY: run
 run:
-	docker run --rm -d -p 5000:5000 ${IMAGE_NAME} ${run-arg}
+	docker run --rm -d ${IMAGE_NAME} ${run-arg}

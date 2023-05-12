@@ -1,4 +1,4 @@
-IMAGE_NAME := gabs79/udacity/personws-server
+IMAGE_NAME := gabs79/udacity/onlinefetcherws
 
 .PHONY: usage
 usage:
