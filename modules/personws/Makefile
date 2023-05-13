@@ -1,4 +1,4 @@
-IMAGE_NAME := gabs79/udacity/onlinefetcherws
+IMAGE_NAME := gabs79/udacity/personproducerws
 
 .PHONY: usage
 usage:
@@ -9,7 +9,7 @@ build-proto:
 	python -m venv .venv
 	source .venv/bin/activate
 	pip install --requirement requirements-build.txt
-	grpc_tools.protoc -I./ --python_out=./ --grpc_python_out=./ person.proto
+	python -m grpc_tools.protoc -I./ --python_out=./ --grpc_python_out=./ person.proto
 	deactivate
 
 .PHONY: build

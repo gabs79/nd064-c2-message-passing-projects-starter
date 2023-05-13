@@ -11,4 +11,4 @@ def get_db_string():
     if True:
         #return f'postgresql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
         return f'postgresql://user:password@localhost:5432/gedb'
-    return "sqlite:///sql-test.db"
+    #return "sqlite:///sql-test.db"

@@ -7,6 +7,7 @@ from app.udaconnect.models import Connection, Location, Person
 from app.udaconnect.schemas import ConnectionSchema, LocationSchema, PersonSchema
 from geoalchemy2.functions import ST_AsText, ST_Point
 from sqlalchemy.sql import text
+from person_producer import send_person
 
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("udaconnect-api")
@@ -119,8 +120,12 @@ class PersonService:
         new_person.last_name = person["last_name"]
         new_person.company_name = person["company_name"]
 
-        db.session.add(new_person)
-        db.session.commit()
+        #grpc
+        returned_person = send_person(person)
+        new_person.id = returned_person.id
+
+        # db.session.add(new_person)
+        # db.session.commit()
 
         return new_person
 

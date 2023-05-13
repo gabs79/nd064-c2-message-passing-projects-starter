@@ -1,0 +1,7 @@
+This is used by GatewayWS as the Person producer. This is to send through GRPC a Person
+to be consumed by this PersonWS (person web service) to ultimately land in DB.
+
+The requirements.txt needs to be added as part of the GatewayWS, as well as the
+generated person_pb2* stubs generated for GRPC.
+
+Currently, this code (person_pb2* protobuf, including additional dependencies from requirements) was copied over api module, but ideally this should be done during the build process.
