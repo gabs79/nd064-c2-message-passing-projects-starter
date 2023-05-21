@@ -11,6 +11,10 @@ from flask import request
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 from typing import Optional, List
+import logging
+
+logging.basicConfig(level=logging.WARNING)
+logger = logging.getLogger("udaconnect-api")
 
 DATE_FORMAT = "%Y-%m-%d"
 
@@ -48,6 +52,7 @@ class PersonsResource(Resource):
 
     @responds(schema=PersonSchema, many=True)
     def get(self) -> List[Person]:
+        logger.warn('>>>>> retrieving persons')
         persons: List[Person] = PersonService.retrieve_all()
         return persons
 
