@@ -44,6 +44,7 @@ Vagrant.configure("2") do |config|
       sudo systemctl enable docker.service
       sudo systemctl start docker.service
       sudo /usr/sbin/usermod -aG docker vagrant
+	  sudo zypper --non-interactive install dos2unix
     SHELL
   end
 

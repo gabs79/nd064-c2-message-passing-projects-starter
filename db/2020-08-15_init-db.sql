@@ -17,6 +17,8 @@ CREATE INDEX creation_time_idx ON location (creation_time);
 
 CREATE TABLE connection (
     id SERIAL PRIMARY KEY,
+    from_person_id INT NOT NULL,
+    to_person_id INT NOT NULL,
     FOREIGN KEY (from_person_id) REFERENCES person(id),
     FOREIGN KEY (to_person_id) REFERENCES person(id),
     exposed_time TIMESTAMP NOT NULL DEFAULT NOW(),

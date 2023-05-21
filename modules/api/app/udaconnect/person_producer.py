@@ -1,14 +1,14 @@
 import grpc
-import person_pb2
-import person_pb2_grpc
+import app.udaconnect.person_pb2
+import app.udaconnect.person_pb2_grpc
 from typing import Dict
 
 def send_person(person_dict: Dict):
     channel = grpc.insecure_channel("localhost:5005")
-    stub = person_pb2_grpc.PersonServiceStub(channel)
+    stub = app.udaconnect.person_pb2.person_pb2_grpc.PersonServiceStub(channel)
 
     # Update this with desired payload
-    person = person_pb2.PersonMessage(
+    person = app.udaconnect.person_pb2.person_pb2.PersonMessage(
         first_name = person_dict['first_name'],
         last_name = person_dict['last_name'],
         company_name = person_dict['company_name']

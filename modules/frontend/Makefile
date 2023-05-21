@@ -1,4 +1,4 @@
-IMAGE_NAME := gabs79/udacity-gatewayws
+IMAGE_NAME := gabs79/udacity-frontendws
 
 .PHONY: usage
 usage:
@@ -9,9 +9,9 @@ build:
 	docker build -t ${IMAGE_NAME} .
 
 .PHONY: push
-push: build
+push:
 	docker push ${IMAGE_NAME}
 
 .PHONY: run
 run:
-	docker run --rm -d -p 5000:5000 ${IMAGE_NAME} ${run-arg}
+	docker run --rm -d -p 3000:3000 ${IMAGE_NAME} ${run-arg}
