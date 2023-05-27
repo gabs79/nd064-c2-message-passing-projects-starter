@@ -4,16 +4,17 @@ import app.udaconnect.person_pb2_grpc
 from typing import Dict
 
 def send_person(person_dict: Dict):
-    channel = grpc.insecure_channel("localhost:5005")
-    stub = app.udaconnect.person_pb2.person_pb2_grpc.PersonServiceStub(channel)
+    #todo add WS host as ENV_VARIABLE
+    with grpc.insecure_channel("udaconnect-person:5005") as channel:
+        stub = app.udaconnect.person_pb2_grpc.PersonServiceStub(channel)
 
-    # Update this with desired payload
-    person = app.udaconnect.person_pb2.person_pb2.PersonMessage(
-        first_name = person_dict['first_name'],
-        last_name = person_dict['last_name'],
-        company_name = person_dict['company_name']
-    )
-    return stub.Create(person)
+        # Update this with desired payload
+        person = app.udaconnect.person_pb2.PersonMessage(
+            first_name = person_dict['first_name'],
+            last_name = person_dict['last_name'],
+            company_name = person_dict['company_name']
+        )
+        return stub.Create(person)
 
 if __name__  == "__main__":
     print('testing person producer (after starting personws/app/server consumer)...')

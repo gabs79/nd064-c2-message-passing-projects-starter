@@ -47,7 +47,10 @@ class PersonsResource(Resource):
     @responds(schema=PersonSchema)
     def post(self) -> Person:
         payload = request.get_json()
+        logger.warn(f'>>>>> to grpc person: {payload}')
         new_person: Person = PersonService.create(payload)
+        logger.warn(f'>>>>> from grpc: {new_person}')
+
         return new_person
 
     @responds(schema=PersonSchema, many=True)
