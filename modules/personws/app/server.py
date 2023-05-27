@@ -14,9 +14,8 @@ class PersonServicer(person_pb2_grpc.PersonServiceServicer):
             "last_name": request.last_name,
             "company_name": request.company_name
         }
-        logging.warning(f'>>>>>> To add person to DB with id:{added_person.id}')
         added_person = PersonDAO.add_person(request_value)
-        logging.warning(f'>>>>>> Added person to DB with id:{added_person.id}')
+        logging.warning(f'>>>>>> Added person to DB:{added_person}')
         request_value['id'] = added_person.id
         return person_pb2.PersonMessage(**request_value)
 

@@ -6,7 +6,7 @@ metadata:
   name: udaconnect-person
 spec:
   ports:
-  - port: 5005
+   - port: 5005
   selector:
     service: udaconnect-person
   type: NodePort

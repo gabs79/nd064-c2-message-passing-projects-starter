@@ -95,11 +95,8 @@ class PersonDAO():
             last_name = person["last_name"],
             company_name = person["company_name"]
         )
-        logging.warning(f'>>>>>> DAO To add person:{new_person}')
         session.add(new_person)
-        logging.warning(f'>>>>>> DAO pre-commit, added person:{new_person}')
         session.commit()
-        logging.warning(f'>>>>>> DAO commited person:{new_person}')
         return new_person
 
 class LocationDAO():
