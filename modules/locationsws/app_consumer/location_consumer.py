@@ -1,6 +1,8 @@
 from typing import Optional
 from bson import dumps, loads
 from kafka import KafkaConsumer
+import logging
+import time
 
 class LocationConsumer():
     def __init__(self, kafka_consumer=Optional[KafkaConsumer], location_dao=None) -> None:
@@ -9,7 +11,9 @@ class LocationConsumer():
 
     def consume(self) -> None:
         for message in self.kafka_consumer:
-            self.location_dao.create(loads(message))
+            loc = loads(message)
+            logging.warning(f'>>>>>> Got kafka location: {loc}')
+            self.location_dao.create(loc)
 
 def create_kafka_consumer(topic_name:str):
     return KafkaConsumer(topic_name)

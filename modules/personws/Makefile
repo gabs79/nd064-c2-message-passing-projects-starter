@@ -31,5 +31,8 @@ delete:
 	kubectl delete -f ${DEPLOYMENT}
 
 .PHONY: redeploy
-redeploy: delete push
+redeploy: delete deploy
+
+.PHONY: deploy
+deploy: push
 	kubectl apply -f ${DEPLOYMENT}

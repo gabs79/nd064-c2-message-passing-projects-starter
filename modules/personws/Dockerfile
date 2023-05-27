@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.9.16-bullseye
 LABEL maintainer="Gabriel Enriquez"
 
 WORKDIR /app
