@@ -16,8 +16,10 @@ END_DATE='2020-12-30'
 class ConnectionProcessor():
     def process(self):
         last_processed: LocationSentinel = LocationSentinelDAO.get_value()
+        logging.warn(f'>>>>>Last processed:{last_processed.last_location_id}')
         locations: List[Location] = LocationDAO.get_after_sentinel(last_processed.last_location_id)
         if locations:
+            logging.warn(f'>>>>>Found {len(locations)} new locations to process.')
             new_connections = self._process_connections(locations)
             if new_connections:
                 ConnectionDAO.create_all(new_connections)
@@ -53,5 +55,6 @@ class ConnectionProcessor():
         return max(locations, key=lambda x: x.id)
 
 if __name__ == "__main__":
+    logging.warn(f'Started processing connections')
     processor = ConnectionProcessor()
     processor.process()

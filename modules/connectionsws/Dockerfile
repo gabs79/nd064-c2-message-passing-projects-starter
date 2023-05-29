@@ -6,6 +6,6 @@ WORKDIR /app
 COPY requirements.txt ./
 RUN pip install --no-cache-dir --requirement requirements.txt
 
-COPY app/ ./
+COPY . .
 
 CMD [ "python", "connection_processor.py" ]

@@ -3,3 +3,5 @@ readme
 **/__pycache__
 Makefile
 **/*.db
+Dockerfile
+.dockerignore

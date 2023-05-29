@@ -1,19 +1,43 @@
 apiVersion: batch/v1
 kind: CronJob
+#kind: Job
 metadata:
-  name: hello
+  name: connectionsws
 spec:
-  schedule: "*/1 * * * *"
+  schedule: "*/15 * * * *"
   jobTemplate:
     spec:
       template:
         spec:
           containers:
           - name: hello
-            image: busybox:1.28
-            imagePullPolicy: IfNotPresent
-            command:
-            - /bin/sh
-            - -c
-            - date; echo Hello from the Kubernetes cluster
+            image: gabs79/udacity-connectionsws:v1.0.1
+            imagePullPolicy: Always
+            env:
+            - name: DB_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: db-env
+                  key: DB_USERNAME
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: DB_PASSWORD
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: db-env
+                  key: DB_NAME
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: db-env
+                  key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: db-env
+                  key: DB_PORT
           restartPolicy: OnFailure
+          #restartPolicy: Never

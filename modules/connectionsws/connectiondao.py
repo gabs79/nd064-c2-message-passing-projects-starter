@@ -15,6 +15,7 @@ from sqlalchemy.orm import mapped_column
 from sqlalchemy.ext.hybrid import hybrid_property
 from datetime import datetime, timedelta
 from sqlalchemy.sql import text
+import logging
 
 db_string = get_db_string()
 
@@ -34,7 +35,7 @@ class Person(Base):
 
 class LocationSentinel(Base):
     __tablename__ = "location_sentinel"
-    last_location_id = mapped_column(Integer, nullable=False, default=0)
+    last_location_id = mapped_column(Integer(), primary_key=True, default=0)
 
 class Location(Base):
     __tablename__ = "location"

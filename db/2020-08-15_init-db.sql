@@ -27,7 +27,7 @@ CREATE TABLE connection (
 );
 
 CREATE TABLE location_sentinel (
-    last_location_id INT NOT NULL
+    last_location_id SERIAL PRIMARY KEY
 );
 
-insert into public.location_sentinel (last_location_id) values (0);
+insert into public.location_sentinel (last_location_id) values (68);
