@@ -1,0 +1,25 @@
+Curently the PersonWS only supports creating persons, but ideally this should migrate (out of the scope for this project)
+all other data retrieval except creating locations and connections (which are sent to Kafka for LocationWS).
+
+Current grpc protobuf (see /modules/personws):
+message PersonMessage {
+  string first_name = 1;
+  string last_name = 2;
+  string company_name = 3;
+  optional int32 id = 4;
+}
+
+service PersonService {
+    rpc Create(PersonMessage) returns (PersonMessage);
+}
+
+For dev testing, I created: ....\modules\personws\app\test_writer.py
+But the current implementation, I was using through the Rest API using the Gateway API.
+I was using Postman - POST, to http://localhost:30001/api/persons
+Json: payload:
+    {
+        "first_name": "GE3",
+        "company_name": "GE Corp3",
+        "last_name": "ge ln3"
+    }
+Then you should see it in the UI or through REST API: http://localhost:30001/api/persons

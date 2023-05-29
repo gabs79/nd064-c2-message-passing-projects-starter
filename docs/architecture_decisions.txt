@@ -1,0 +1,17 @@
+My decisions are based on what we learned in the prior lectures.
+This is not a finished/polished project. I left it on purpose as a migration towards a re-architecture of
+the project but tried to tackle the main pain-points of the project.
+The existing API is planned to be transformed to a Gateway. This will redirect calls to either the PersonWS or Location Consumer.
+The PersonWS is currently only dealing with inserting new persons in the DB. But ideally it will handle all but
+new locations and processing connections. GRPC was chosen to make it perform faster to transfer data but first through
+a Rest API to help with existing implementation from Web api. 
+Location-WS (web service) is implemented with Kafaka. This is the main WS to help to alleviate the "expected" 
+(more questions should be asked about how ofthen these locations are created, how are created, etc) high traffic
+of new locations, but overall we don't want to perform the connections processing everytime at run time at every request.
+Instead, now this Location Producer sends to a kafka topic to decouple this ingestion and allow to buffer its
+consumption.
+Last, the Connections Processor is currently a CronJob to execute a batch job which calculates connections based
+on new locations. To determine new connections, I created a new table that stores a sentinel for last processed id
+of locations.
+As I mentioned, this is a migration towards a microservices architecture. Ideally, the PersonWS should handle all new data
+except locations and connections ingestions and processing. And the Gateway API should not be connected to the DB.
