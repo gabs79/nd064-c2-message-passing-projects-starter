@@ -26,3 +26,5 @@ Werkzeug==0.16.1
 flask-restx==0.2.0
 grpcio==1.54.0
 grpcio-tools==1.54.0
+bson==0.5.10
+kafka-python==2.0.2
