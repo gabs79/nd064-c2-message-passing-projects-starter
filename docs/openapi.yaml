@@ -1,0 +1,133 @@
+---
+swagger: "2.0"
+info:
+  version: v1.0.0-ge
+  title: UdaConnect API
+basePath: /
+tags:
+- name: UdaConnect
+  description: Connections via geolocation.
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  /api/locations:
+    get:
+      tags:
+      - UdaConnect
+      operationId: get_location_resource
+      parameters:
+      - name: location_id
+        in: query
+        description: Unique ID for a given Location
+        required: false
+        type: string
+      responses:
+        "200":
+          description: Success
+    post:
+      tags:
+      - UdaConnect
+      operationId: post_location_resource
+      parameters:
+      - name: location_id
+        in: query
+        description: Unique ID for a given Location
+        required: false
+        type: string
+      responses:
+        "200":
+          description: Success
+  /api/locations/{location_id}:
+    get:
+      tags:
+      - UdaConnect
+      operationId: get_location_resource
+      parameters:
+      - name: location_id
+        in: path
+        description: Unique ID for a given Location
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Success
+    post:
+      tags:
+      - UdaConnect
+      operationId: post_location_resource
+      parameters:
+      - name: location_id
+        in: path
+        description: Unique ID for a given Location
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Success
+  /api/persons:
+    get:
+      tags:
+      - UdaConnect
+      operationId: get_persons_resource
+      parameters: []
+      responses:
+        "200":
+          description: Success
+    post:
+      tags:
+      - UdaConnect
+      operationId: post_persons_resource
+      parameters: []
+      responses:
+        "200":
+          description: Success
+  /api/persons/{person_id}:
+    get:
+      tags:
+      - UdaConnect
+      operationId: get_person_resource
+      parameters:
+      - name: person_id
+        in: path
+        description: Unique ID for a given Person
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Success
+  /api/persons/{person_id}/connection:
+    get:
+      tags:
+      - UdaConnect
+      operationId: get_connection_data_resource
+      parameters:
+      - name: distance
+        in: query
+        description: Proximity to a given user in meters
+        required: false
+        type: string
+      - name: end_date
+        in: query
+        description: Upper bound of date range
+        required: false
+        type: string
+      - name: start_date
+        in: query
+        description: Lower bound of date range
+        required: false
+        type: string
+      - name: person_id
+        in: path
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Success
+definitions: {}
+responses:
+  ParseError:
+    description: When a mask can't be parsed
+  MaskError:
+    description: When any error occurs on mask

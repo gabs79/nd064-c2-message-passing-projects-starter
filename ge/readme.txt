@@ -6,6 +6,11 @@ https://helm.sh/docs/intro/install/
 	
 	helm repo add bitnami-repo https://charts.bitnami.com/bitnami
 helm install kafka-release bitnami-repo/kafka
+
+https://stackoverflow.com/questions/74035428/how-to-access-bitnami-kafka-kubernetes-cluster-running-inside-vagrantvm-from-t
+helm install udaconnect-kafka bitnami/kafka --set externalAccess.enabled=true --set externalAccess.service.type=NodePort --set externalAccess.service.nodePorts[0]=30887 --set rbac.create=true --set externalAccess.autoDiscovery.enabled=true
+
+
 	output:
 		can be accessed by consumer via port 9092 on following DNS
 			kafka-release-0.kafka-release-headless.default.svc.cluster.local:9092

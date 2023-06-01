@@ -8,6 +8,7 @@ from app.udaconnect.schemas import ConnectionSchema, LocationSchema, PersonSchem
 from geoalchemy2.functions import ST_AsText, ST_Point
 from sqlalchemy.sql import text
 from app.udaconnect.person_producer import send_person
+from app.udaconnect.location_producer import create_kafka_producer, LocationProducer
 
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("udaconnect-api")
@@ -106,9 +107,12 @@ class LocationService:
         new_location.person_id = location["person_id"]
         new_location.creation_time = location["creation_time"]
         new_location.coordinate = ST_Point(location["latitude"], location["longitude"])
-        db.session.add(new_location)
-        db.session.commit()
+        #db.session.add(new_location)
+        #db.session.commit()
+        TOPIC_NAME = 'items'
 
+        producer = LocationProducer(topic_name=TOPIC_NAME, kafka_producer=create_kafka_producer('kafka-server'))
+        producer.send(location)
         return new_location
 
 

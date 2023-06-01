@@ -2,7 +2,7 @@ apiVersion: batch/v1
 kind: CronJob
 #kind: Job
 metadata:
-  name: connectionsws
+  name: udaconnect-connection
 spec:
   schedule: "*/15 * * * *"
   jobTemplate:
