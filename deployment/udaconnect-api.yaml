@@ -60,4 +60,19 @@ spec:
             configMapKeyRef:
               name: db-env
               key: DB_PORT
+        - name: KAFKA_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-env
+              key: KAFKA_HOST
+        - name: KAFKA_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-env
+              key: KAFKA_PORT
+        - name: KAFKA_TOPIC
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-env
+              key: KAFKA_TOPIC
       restartPolicy: Always

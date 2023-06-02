@@ -1,6 +1,7 @@
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List
+import os
 
 from app import db
 from app.udaconnect.models import Connection, Location, Person
@@ -109,9 +110,11 @@ class LocationService:
         new_location.coordinate = ST_Point(location["latitude"], location["longitude"])
         #db.session.add(new_location)
         #db.session.commit()
-        TOPIC_NAME = 'items'
+        KAFKA_TOPIC = os.getenv("KAFKA_TOPIC")
+        KAFKA_SERVER = os.getenv("KAFKA_SERVER")
+        KAFKA_PORT = os.getenv("KAFKA_PORT")
 
-        producer = LocationProducer(topic_name=TOPIC_NAME, kafka_producer=create_kafka_producer('kafka-server'))
+        producer = LocationProducer(topic_name=KAFKA_TOPIC, kafka_producer=create_kafka_producer(f'{KAFKA_SERVER}:{KAFKA_PORT}'))
         producer.send(location)
         return new_location
 

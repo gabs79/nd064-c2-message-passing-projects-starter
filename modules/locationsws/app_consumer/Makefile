@@ -8,11 +8,11 @@ usage:
 
 .PHONY: build
 build:
-	docker build -t ${IMAGE_NAME} .
+	docker build -t ${IMAGE_NAME}:${TAG} .
 
 .PHONY: push
 push: build
-	docker push ${IMAGE_NAME}
+	docker push ${IMAGE_NAME}:${TAG}
 
 .PHONY: run
 run:

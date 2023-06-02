@@ -5,14 +5,18 @@ This project is a fork from the base project. forked from udacity/nd064-c2-messa
 ### How to run
 This is an extension of the original project. The steps are additive to the base:
 1. `kubectl apply -f deployment/db-configmap.yaml` - Set up environment variables for the pods
-2. `kubectl apply -f deployment/db-secret.yaml` - Set up secrets for the pods
-3. `kubectl apply -f deployment/postgres.yaml` - Set up a Postgres database running PostGIS
-4. `kubectl apply -f deployment/udaconnect-api.yaml` - Set up the service and deployment for the API
-5. `kubectl apply -f deployment/udaconnect-app.yaml` - Set up the service and deployment for the web app
-6. `kubectl apply -f deployment/udaconnect-person.yaml` - Set up the person GRPC WebService and deployment
-7. `kubectl apply -f deployment/udaconnect-location.yaml` - Set up the Location Kafka Consumer WebService and deployment
-8. `kubectl apply -f deployment/udaconnect-connection.yaml` - Set up the Connection CronJob deployment
-9. `sh scripts/run_db_command.sh <POD_NAME>` - Seed your database against the `postgres` pod. (`kubectl get pods` will give you the `POD_NAME`)
+1. `kubectl apply -f deployment/db-secret.yaml` - Set up secrets for the pods
+1. `kubectl apply -f deployment/kafka-configmap.yaml` - Set up kafka env vars for the pods 
+1. `kubectl apply -f deployment/postgres.yaml` - Set up a Postgres database running PostGIS
+1. `kubectl apply -f deployment/udaconnect-api.yaml` - Set up the service and deployment for the API
+1. `kubectl apply -f deployment/udaconnect-app.yaml` - Set up the service and deployment for the web app
+1. `kubectl apply -f deployment/udaconnect-person.yaml` - Set up the person GRPC WebService and deployment
+1. `kubectl apply -f deployment/udaconnect-location.yaml` - Set up the Location Kafka Consumer WebService and deployment
+1. `kubectl apply -f deployment/udaconnect-connection.yaml` - Set up the Connection CronJob deployment
+1. `sh scripts/run_db_command.sh <POD_NAME>` - Seed your database against the `postgres` pod. (`kubectl get pods` will give you the `POD_NAME`)
+1. kafka install
+   1. `helm install kafka-release bitnami-repo/kafka`
+   1. have KUBECONFIG env var to /etc/rancher/k3s/k3s.yaml; `helm install udaconnect-kafka-release bitnami-repo/kafka --set externalAccess.enabled=true --set externalAccess.service.type=NodePort --set externalAccess.service.nodePorts[0]=30887 --set rbac.create=true --set externalAccess.autoDiscovery.enabled=true`
 
 ## Overview
 ### Background
